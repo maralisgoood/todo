@@ -1,36 +1,50 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  let task;
   const [toDo, setToDo] = useState([]);
 
-  function add(e) {
-    e.preventDefault();
-    setToDo([...toDo, e.target.newList.value]);
-  }
+  const input = (event) => {
+    task = event.target.value;
+  };
 
-  function remove(index) {
-    toDo.splice(index, 0);
+  // add task
+  const addTask = () => {
+    if (task != "") {
+      setToDo([...toDo, task]);
+    } else {
+      setToDo(toDo);
+    }
+  };
+
+  // remove task
+  const removeTask = (task) => {
+    toDo.splice(task, 1);
     setToDo([...toDo]);
-  }
+  };
 
   return (
-    <div className="App">
-      <form onSubmit={add}>
-        <input name='newList' />
-        <button type='submit'>add</button>
-      </form>
+    <div className="container">
+      <div id="newTask">
+        <h3>TODO LIST</h3>
+        <br />
+        <input type="text" onChange={input} placeholder="enter a task" />
+        <button onClick={addTask} id="addBtn">Add</button>
+      </div>
 
-      <ul className='lists'>
-        {toDo.map((list, index) =>
-          <li key={index}>
-            {list}
-            <button onSubmit={remove} type='submit'>remove</button>
-          </li>
-        )}
-      </ul>
+      <div id="tasks">
+        <ul>
+          {toDo.map((aTask, index) => (
+            <li key={index} id={index}>
+              {aTask}
+              <button onClick={() => removeTask(index)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-  )
+  );
 }
 
 export default App;
