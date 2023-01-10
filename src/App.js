@@ -2,20 +2,15 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [toDo, setToDo] = useState(["todo"]);
-  // console.log([...toDo, "newList"])
+  const [toDo, setToDo] = useState([]);
+
   function add(e) {
     e.preventDefault();
     setToDo([...toDo, e.target.newList.value]);
   }
-  function remove(e) {
-    e.preventDefault();
-    setToDo([""]);
-  }
 
   function remove(index) {
-    console.log(index);
-    toDo.splice(index, 1);
+    toDo.splice(index, 0);
     setToDo([...toDo]);
   }
 
@@ -28,7 +23,10 @@ function App() {
 
       <ul className='lists'>
         {toDo.map((list, index) =>
-          <li key={index}>{list}<button onSubmit={remove} type='submit'>remove</button></li>
+          <li key={index}>
+            {list}
+            <button onSubmit={remove} type='submit'>remove</button>
+          </li>
         )}
       </ul>
     </div>
